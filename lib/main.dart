@@ -46,8 +46,12 @@ class MyHome extends StatelessWidget {
                 child: Text('Graph'),
               ),
             ),
-            Card(
-              child: Text('Transaction List'),
+            Column(
+              children: _transactions.map((transaction) {
+                return Card(
+                  child: Text(transaction.title),
+                );
+              }).toList(),
             )
           ],
         ));
