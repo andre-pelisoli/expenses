@@ -20,18 +20,20 @@ class MyHome extends StatelessWidget {
         appBar: AppBar(
           title: Text("Expenses"),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              child: Card(
-                color: Colors.blue,
-                elevation: 5,
-                child: Text('Graph'),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                child: Card(
+                  color: Colors.blue,
+                  elevation: 5,
+                  child: Text('Graph'),
+                ),
               ),
-            ),
-            TransactionUser()
-          ],
+              TransactionUser()
+            ],
+          ),
         ));
   }
 }
