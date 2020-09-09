@@ -1,6 +1,10 @@
-import 'package:expenses/components/transaction_user.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
+import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/material.dart';
+
+import 'components/transaction_list.dart';
+import 'models/transaction.dart';
 
 main() => runApp(ExpensesApp());
 
@@ -13,14 +17,60 @@ class ExpensesApp extends StatelessWidget {
   }
 }
 
-class MyHome extends StatelessWidget {
+class MyHome extends StatefulWidget {
   @override
-  Widget build(Object context) {
+  _MyHomeState createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<MyHome> {
+  final _transactions = [
+    Transaction(
+      id: 't1',
+      title: 'New running shoes',
+      value: 310.17,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'New shirt',
+      value: 30.99,
+      date: DateTime.now(),
+    ),
+  ];
+
+  _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (ctx) {
+          return TransactionForm(_addTransaction);
+        });
+  }
+
+  _addTransaction(String title, double value) {
+    final newTransaction = Transaction(
+      id: Random().nextDouble().toString(),
+      title: title,
+      value: value,
+      date: DateTime.now(),
+    );
+
+    setState(() {
+      _transactions.add(newTransaction);
+    });
+
+    Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Expenses"),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.add), onPressed: () {}),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _openTransactionFormModal(context),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -34,13 +84,13 @@ class MyHome extends StatelessWidget {
                 child: Text('Graph'),
               ),
             ),
-            TransactionUser()
+            TransactionList(_transactions),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => _openTransactionFormModal(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
