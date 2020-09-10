@@ -11,11 +11,19 @@ main() => runApp(ExpensesApp());
 class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var green = Colors.green;
     return MaterialApp(
       home: MyHome(),
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: green,
         accentColor: Colors.amber,
+        fontFamily: 'Quicksand',
+        appBarTheme: AppBarTheme(
+            textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700))),
       ),
     );
   }
