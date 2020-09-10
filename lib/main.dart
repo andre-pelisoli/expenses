@@ -18,12 +18,18 @@ class ExpensesApp extends StatelessWidget {
         primarySwatch: green,
         accentColor: Colors.amber,
         fontFamily: 'Quicksand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            )),
         appBarTheme: AppBarTheme(
             textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: TextStyle(
                     fontFamily: 'OpenSans',
                     fontSize: 20,
-                    fontWeight: FontWeight.w700))),
+                    fontWeight: FontWeight.bold))),
       ),
     );
   }
@@ -35,19 +41,19 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
-  final _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'New running shoes',
-      value: 310.17,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'New shirt',
-      value: 30.99,
-      date: DateTime.now(),
-    ),
+  final List<Transaction> _transactions = [
+    // Transaction(
+    //   id: 't1',
+    //   title: 'New running shoes',
+    //   value: 310.17,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'New shirt',
+    //   value: 30.99,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   _openTransactionFormModal(BuildContext context) {
