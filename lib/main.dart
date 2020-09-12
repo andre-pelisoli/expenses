@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:expenses/components/chart.dart';
 import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ main() => runApp(ExpensesApp());
 class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var green = Colors.green;
+    var green = Colors.purple;
     return MaterialApp(
       home: MyHome(),
       theme: ThemeData(
@@ -42,19 +43,25 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> {
   final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'New running shoes',
-    //   value: 310.17,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'New shirt',
-    //   value: 30.99,
-    //   date: DateTime.now(),
-    // ),
+    Transaction(
+      id: 't1',
+      title: 'New running shoes',
+      value: 310.17,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'New shirt',
+      value: 30.99,
+      date: DateTime.now().subtract(Duration(days: 4)),
+    ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((element) {
+      return element.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
@@ -95,13 +102,7 @@ class _MyHomeState extends State<MyHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              child: Card(
-                color: Colors.blue,
-                elevation: 5,
-                child: Text('Graph'),
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_transactions),
           ],
         ),
