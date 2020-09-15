@@ -50,13 +50,30 @@ class _TransactionFormState extends State<TransactionForm> {
                   labelText: 'Price (R\$)',
                 ),
               ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    Text("Date is not selected"),
+                    FlatButton(
+                      textColor: Theme.of(context).primaryColor,
+                      child: Text(
+                        'Select Date',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () {},
+                    )
+                  ],
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FlatButton(
+                  RaisedButton(
                     onPressed: _submitForm,
+                    color: Theme.of(context).primaryColor,
                     child: Text('New Transaction'),
-                    textColor: Colors.purple,
+                    textColor: Theme.of(context).textTheme.button.color,
                   ),
                 ],
               )
