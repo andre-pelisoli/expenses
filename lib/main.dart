@@ -108,10 +108,10 @@ class _MyHomeState extends State<MyHome> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-                height: availableHeigh * 0.3,
+                height: availableHeigh * 0.25,
                 child: Chart(_recentTransactions)),
             Container(
-                height: availableHeigh * 0.7,
+                height: availableHeigh * 0.75,
                 child: TransactionList(_transactions, _removeTransaction)),
           ],
         ),
