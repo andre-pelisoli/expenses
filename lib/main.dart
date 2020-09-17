@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:expenses/components/chart.dart';
 import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/material.dart';
-
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
 
@@ -49,6 +48,7 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> {
   final List<Transaction> _transactions = [];
+  bool _showChart = false;
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((element) {
@@ -87,13 +87,25 @@ class _MyHomeState extends State<MyHome> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: Text("Expenses"),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.add),
           onPressed: () => _openTransactionFormModal(context),
-        )
+        ),
+        if (isLandScape)
+          IconButton(
+              icon: Icon(_showChart ? Icons.list : Icons.show_chart),
+              onPressed: () {
+                setState(() {
+                  print("testtttt");
+                  _showChart = !_showChart;
+                });
+              }),
       ],
     );
 
@@ -107,12 +119,14 @@ class _MyHomeState extends State<MyHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-                height: availableHeigh * 0.25,
-                child: Chart(_recentTransactions)),
-            Container(
-                height: availableHeigh * 0.75,
-                child: TransactionList(_transactions, _removeTransaction)),
+            if (_showChart || !isLandScape)
+              Container(
+                  height: availableHeigh * (isLandScape ? 0.7 : 0.3),
+                  child: Chart(_recentTransactions)),
+            if (!_showChart || !isLandScape)
+              Container(
+                  height: availableHeigh * 0.7,
+                  child: TransactionList(_transactions, _removeTransaction)),
           ],
         ),
       ),
