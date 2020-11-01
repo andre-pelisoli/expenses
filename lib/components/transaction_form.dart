@@ -1,4 +1,5 @@
 import 'package:expenses/components/adaptative_button.dart';
+import 'package:expenses/components/adaptative_data_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -30,23 +31,6 @@ class _TransactionFormState extends State<TransactionForm> {
     widget.onSubmit(title, value, _selectedDate);
   }
 
-  _showDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime.now(),
-    ).then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
-
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -73,25 +57,13 @@ class _TransactionFormState extends State<TransactionForm> {
                   onSubmitted: (_) => _submitForm(),
                   label: 'Price (R\$)',
                 ),
-                Container(
-                  height: 70,
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        _selectedDate == null
-                            ? "Date is not selected"
-                            : DateFormat('d/M/y').format(_selectedDate),
-                      ),
-                      FlatButton(
-                        textColor: Theme.of(context).primaryColor,
-                        child: Text(
-                          'Select Date',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: _showDatePicker,
-                      )
-                    ],
-                  ),
+                AdaptativeDatePicker(
+                  selectedDate: _selectedDate,
+                  onDateChange: (newDate) {
+                    setState(() {
+                      _selectedDate = newDate;
+                    });
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
