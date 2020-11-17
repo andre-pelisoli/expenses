@@ -89,7 +89,7 @@ class _MyHomeState extends State<MyHome> {
 
   Widget _getIconButton(IconData icon, Function fn) {
     return Platform.isIOS
-        ? GestureDetector()
+        ? GestureDetector(onTap: fn, child: Icon(icon))
         : IconButton(icon: Icon(icon), onPressed: fn);
   }
 
@@ -99,13 +99,17 @@ class _MyHomeState extends State<MyHome> {
 
     bool isLandScape = mediaQuery.orientation == Orientation.landscape;
 
+    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
+    final chartList =
+        Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
+
     final actions = <Widget>[
       _getIconButton(
         Platform.isIOS ? CupertinoIcons.add : Icons.add,
         () => _openTransactionFormModal(context),
       ),
       if (isLandScape)
-        _getIconButton(_showChart ? Icons.list : Icons.show_chart, () {
+        _getIconButton(_showChart ? iconList : chartList, () {
           setState(() {
             _showChart = !_showChart;
           });
